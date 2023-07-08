@@ -1,0 +1,51 @@
+int solve(int i, int j, vector<vector<int>>&dp, int m, int n){           //memoization
+    int count=0;
+    if(i==m-1&&j==n-1){
+        return 1;
+    }
+    if(dp[i][j]!=0)return dp[i][j];
+    int nsr=i+1,nsc=j;
+    if(nsr>=0&&nsr<m&&nsc>=0&&nsc<n){
+        count=count+solve(nsr,nsc,dp,m,n);
+    }
+    nsr=i,nsc=j+1;
+    if(nsr>=0&&nsr<m&&nsc>=0&&nsc<n){
+        count=count+solve(nsr,nsc,dp,m,n);
+    }
+    return dp[i][j]=count;
+}
+
+int uniquePaths(int m, int n) {
+    vector<vector<int>>dp(m,vector<int>(n,0));
+    return solve(0,0,dp,m,n);
+}
+
+
+
+
+
+
+
+int solve(int i, int j, vector<vector<int>>&vis,int m, int n){           //recursive
+      int count=0;
+      if(i==m-1&&j==n-1){
+          return 1;
+      }
+      vis[i][j]=1;
+      int nsr=i+1,nsc=j;
+      if(nsr>=0&&nsr<m&&nsc>=0&&nsc<n&&vis[nsr][nsc]==0){
+          count=count+solve(nsr,nsc,vis,m,n);
+      }
+      nsr=i,nsc=j+1;
+      if(nsr>=0&&nsr<m&&nsc>=0&&nsc<n&&vis[nsr][nsc]==0){
+          count=count+solve(nsr,nsc,vis,m,n);
+      }
+      vis[i][j]=0;
+      return count;
+  }
+  int uniquePaths(int m, int n) {
+      int count=0;
+      vector<vector<int>>vis(m,vector<int>(n,0));
+      count=solve(0,0,vis,m,n);
+      return count;
+  }
